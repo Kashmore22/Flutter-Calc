@@ -30,6 +30,8 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
         _displayController.clear();
       } else if (value == '=') {
         _evaluateExpression();
+      } else if (value == 'x²') {
+        _squareNumber();
       } else {
         _displayController.text += value;
       }
@@ -47,9 +49,18 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
     }
   }
 
+  void _squareNumber() {
+    try {
+      final value = double.parse(_displayController.text);
+      final result = value * value;
+      _displayController.text = result.toString();
+    } catch (e) {
+      _displayController.text = 'Error';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Calculator by GitHub Copilot'),
@@ -78,13 +89,14 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                     crossAxisCount: 4,
                     childAspectRatio: aspectRatio,
                   ),
-                  itemCount: 16,
+                  itemCount: 17,
                   itemBuilder: (context, index) {
                     final buttons = [
                       '7', '8', '9', '/',
                       '4', '5', '6', '*',
                       '1', '2', '3', '-',
-                      'C', '0', '=', '+'
+                      'C', '0', '=', '+',
+                      'x²'
                     ];
                     return ElevatedButton(
                       onPressed: () {
